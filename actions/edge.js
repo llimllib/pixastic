@@ -42,11 +42,18 @@ Pixastic.Actions.edge = {
       var rect = params.options.rect;
       var w = rect.width;
       var h = rect.height;
+      var wx = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
+      var wy = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
       this.each_3x3(data, w, h, function(z1, z2, z3, z4, z5, z6, z7, z8, z9) {
-        w = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
-        return w[0]*z1 + w[1]*z2 + w[2]*z3 +
-               w[3]*z4 + w[4]*z5 + w[5]*z6 +
-               w[6]*z7 + w[7]*z8 + w[8]*z9;
+        Gx = Math.abs(wx[0]*z1 + wx[1]*z2 + wx[2]*z3 +
+                      wx[3]*z4 + wx[4]*z5 + wx[5]*z6 +
+                      wx[6]*z7 + wx[7]*z8 + wx[8]*z9);
+
+        Gy = Math.abs(wy[0]*z1 + wy[1]*z2 + wy[2]*z3 +
+                      wy[3]*z4 + wy[4]*z5 + wy[5]*z6 +
+                      wy[6]*z7 + wy[7]*z8 + wy[8]*z9);
+
+        return Gx + Gy;
       });
       return true;
     }
