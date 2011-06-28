@@ -1,7 +1,7 @@
 /*
  * Pixastic Lib - Noise filter - v0.1.0
  * Copyright (c) 2008 Jacob Seidelin, jseidelin@nihilogic.dk, http://blog.nihilogic.dk/
- * MIT License [http://www.opensource.org/licenses/mit-license.php]
+ * License: [http://www.pixastic.com/lib/license.txt]
  */
 
 Pixastic.Actions.noise = {
@@ -16,7 +16,7 @@ Pixastic.Actions.noise = {
 		if (typeof params.options.strength != "undefined")
 			strength = parseFloat(params.options.strength)||0;
 		if (typeof params.options.mono != "undefined")
-			mono = !!(params.options.mono);
+			mono = !!(params.options.mono && params.options.mono != "false");
 
 		amount = Math.max(0,Math.min(1,amount));
 		strength = Math.max(0,Math.min(1,strength));

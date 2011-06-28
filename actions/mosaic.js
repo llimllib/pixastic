@@ -1,7 +1,7 @@
 /*
  * Pixastic Lib - Mosaic filter - v0.1.0
  * Copyright (c) 2008 Jacob Seidelin, jseidelin@nihilogic.dk, http://blog.nihilogic.dk/
- * MIT License [http://www.opensource.org/licenses/mit-license.php]
+ * License: [http://www.pixastic.com/lib/license.txt]
  */
 
 Pixastic.Actions.mosaic = {
@@ -30,13 +30,20 @@ Pixastic.Actions.mosaic = {
 
 			for (var y=0;y<h;y+=blockSize) {
 				for (var x=0;x<w;x+=blockSize) {
-					pixelCtx.drawImage(copy, x, y, blockSize, blockSize, 0, 0, 1, 1);
+					var blockSizeX = blockSize;
+					var blockSizeY = blockSize;
+		
+					if (blockSizeX + x > w)
+						blockSizeX = w - x;
+					if (blockSizeY + y > h)
+						blockSizeY = h - y;
+
+					pixelCtx.drawImage(copy, x, y, blockSizeX, blockSizeY, 0, 0, 1, 1);
 					var data = pixelCtx.getImageData(0,0,1,1).data;
 					ctx.fillStyle = "rgb(" + data[0] + "," + data[1] + "," + data[2] + ")";
 					ctx.fillRect(rect.left + x, rect.top + y, blockSize, blockSize);
 				}
 			}
-
 			params.useData = false;
 
 			return true;

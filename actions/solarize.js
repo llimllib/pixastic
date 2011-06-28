@@ -1,13 +1,13 @@
 /*
  * Pixastic Lib - Solarize filter - v0.1.0
  * Copyright (c) 2008 Jacob Seidelin, jseidelin@nihilogic.dk, http://blog.nihilogic.dk/
- * MIT License [http://www.opensource.org/licenses/mit-license.php]
+ * License: [http://www.pixastic.com/lib/license.txt]
  */
 
 Pixastic.Actions.solarize = {
 
 	process : function(params) {
-		var useAverage = !!params.options.average;
+		var useAverage = !!(params.options.average && params.options.average != "false");
 
 		if (Pixastic.Client.hasCanvasImageData()) {
 			var data = Pixastic.prepareData(params);

@@ -1,14 +1,14 @@
 /*
  * Pixastic Lib - Laplace filter - v0.1.0
  * Copyright (c) 2008 Jacob Seidelin, jseidelin@nihilogic.dk, http://blog.nihilogic.dk/
- * MIT License [http://www.opensource.org/licenses/mit-license.php]
+ * License: [http://www.pixastic.com/lib/license.txt]
  */
 
 Pixastic.Actions.laplace = {
 	process : function(params) {
 
 		var strength = 1.0;
-		var invert = !!(params.options.invert);
+		var invert = !!(params.options.invert && params.options.invert != "false");
 		var contrast = parseFloat(params.options.edgeStrength)||0;
 
 		var greyLevel = parseInt(params.options.greyLevel)||0;
