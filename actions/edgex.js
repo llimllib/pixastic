@@ -7,7 +7,7 @@ Pixastic.Actions.edgex = {
     var w4 = w*4;
     var y = h;
     var end = w4*h;
-    copy = data.slice();
+    copy = new Uint8Array(data);
     do {
       var offtopY = (y-2)*w4;
       var offsetY = (y-1)*w4;
