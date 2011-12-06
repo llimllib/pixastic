@@ -3,7 +3,7 @@ Pixastic.Actions.edgex = {
     return Math.max(min, Math.min(val, max));
   },
 
-  each_3x3 : function(data, w, h, visit, avg_function) {
+  each_3x3 : function(data, w, h, visit) {
     var w4 = w*4;
     var y = h;
     var end = w4*h;
