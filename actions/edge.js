@@ -53,7 +53,7 @@ Pixastic.Actions.edge = {
                       wy[3]*z4 + wy[4]*z5 + wy[5]*z6 +
                       wy[6]*z7 + wy[7]*z8 + wy[8]*z9);
 
-        return Gx + Gy;
+        return Math.sqrt(Gx*Gx + Gy*Gy);
       });
       return true;
     }
