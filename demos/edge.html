@@ -2,11 +2,11 @@
 <script src="jquery-1.3.2.min.js"></script>
 <script src="../pixastic.core.js"></script>
 <script src="../pixastic.jquery.js"></script>
+<script src="../actions/edges2.js"></script>
 <script src="../actions/weighted_desaturate.js"></script>
 <script src="../actions/edgex.js"></script>
 <script src="../actions/edgey.js"></script>
 <script src="../actions/edge.js"></script>
-<script src="../actions/edges2.js"></script>
 <script>
 $(document).ready(function(){
 });
@@ -25,7 +25,7 @@ function edge() {
 
 function edges2() {
   $("#edges2");
-  $("#edges2").pixastic("edges2", {rect: {width: 100, height: 100}});
+  $("#edges2").pixastic("edges2");
 }
 
 $(function() {
