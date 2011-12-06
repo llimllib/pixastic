@@ -6,6 +6,7 @@
 <script src="../actions/edgex.js"></script>
 <script src="../actions/edgey.js"></script>
 <script src="../actions/edge.js"></script>
+<script src="../actions/edges2.js"></script>
 <script>
 $(document).ready(function(){
 });
@@ -21,15 +22,28 @@ function edgey() {
 function edge() {
   $("#gradient").pixastic("weighted_desaturate", {r:1, g:0, b:1}).pixastic("edge");
 }
+
+function edges2() {
+  $("#edges2");
+  $("#edges2").pixastic("edges2", {rect: {width: 100, height: 100}});
+}
+
+$(function() {
+  $("#Gx").load(edgex);
+  $("#Gy").load(edgey);
+  $("#gradient").load(edge);
+  $("#edges2").load(edges2);
+});
   
 </script>
 </head>
 <body>
 <div>
   <img id="testimg" src="jump.jpg">
-  <img id="Gx" src="jump.jpg" onload="edgex()">
-  <img id="Gy" src="jump.jpg" onload="edgey()">
-  <img id="gradient" src="jump.jpg" onload="edge()">
+  <img id="Gx" src="jump.jpg">
+  <img id="Gy" src="jump.jpg">
+  <img id="gradient" src="jump.jpg">
+  <img id="edges2" src="jump.jpg">
 </div>
 </body>
 </html>
