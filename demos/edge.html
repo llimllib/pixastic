@@ -7,6 +7,7 @@
 <script src="../actions/edgex.js"></script>
 <script src="../actions/edgey.js"></script>
 <script src="../actions/edge.js"></script>
+<script src="../actions/convolve.js"></script>
 <script>
 $(document).ready(function(){
 });
@@ -24,8 +25,11 @@ function edge() {
 }
 
 function edges2() {
-  $("#edges2");
   $("#edges2").pixastic("edges2");
+}
+
+function convolve() {
+  $("#convolve").pixastic("convolve", {kernel: [-1,-2,-1,0,0,0,1,2,1]});
 }
 
 $(function() {
@@ -33,6 +37,7 @@ $(function() {
   $("#Gy").load(edgey);
   $("#gradient").load(edge);
   $("#edges2").load(edges2);
+  $("#convolve").load(convolve);
 });
   
 </script>
@@ -44,6 +49,7 @@ $(function() {
   <img id="Gy" src="jump.jpg">
   <img id="gradient" src="jump.jpg">
   <img id="edges2" src="jump.jpg">
+  <img id="convolve" src="jump.jpg">
 </div>
 </body>
 </html>
