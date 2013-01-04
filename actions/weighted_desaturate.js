@@ -20,12 +20,12 @@ Pixastic.Actions.weighted_desaturate = {
     var rweight = params.options.r;
     var gweight = params.options.g;
     var bweight = params.options.b;
-    
+
     var scale = 1 / (rweight + gweight + bweight);
     rweight *= scale;
     gweight *= scale;
     bweight *= scale;
-    
+
     if (Pixastic.Client.hasCanvasImageData()) {
       var data = Pixastic.prepareData(params);
       var rect = params.options.rect;
