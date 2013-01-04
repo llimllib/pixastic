@@ -48,10 +48,6 @@ Pixastic.Actions.kmeans = {
             }
           }
 
-          //if (!minc) {
-          //  console.log(pixel, JSON.stringify(centroids));
-          //}
-
           //store the pixel in the class of its closest centroid
           //classes[minc].push(pixel);
           try {
@@ -72,9 +68,8 @@ Pixastic.Actions.kmeans = {
       }
 
 
-      //copy the old centroids
-      var new_centroids = [];
       //calculate the new centroids
+      var new_centroids = [];
       for (var klass=0; klass < 3; klass++) {
         var sums = [0,0,0];
         var n = 0;
