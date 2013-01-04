@@ -14,7 +14,9 @@ Pixastic.Actions.kmeans = {
   },
 
   k_means : function(data, w, h) {
-    var centroids = [[255,0,0],[0,255,0],[0,0,255]];
+    var centroids = [[Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
+                     [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
+                     [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)]];
 
     while(1) {
       console.log("looping centroids ", JSON.stringify(centroids));
@@ -60,6 +62,15 @@ Pixastic.Actions.kmeans = {
           }
         } while (--x);
       } while (--y);
+
+      //if any of the classes are empty, try new centroids. We can't sensibly continue (?)
+      if (classes[0].length == 0 || classes[1].length == 0 || classes[2].length == 0) {
+        var centroids = [[Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
+                         [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
+                         [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)]];
+        continue;
+      }
+
 
       //copy the old centroids
       var new_centroids = [];
