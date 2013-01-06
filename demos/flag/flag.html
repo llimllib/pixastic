@@ -7,6 +7,7 @@
 .color {
     width: 150px;
     height: 150px;
+    float:left;
 }
 </style>
 <script>
@@ -17,25 +18,21 @@ function kmeans() {
     var colors = params["centroids"];
     console.log("colors: ", colors, params, ret);
 
-    var one   = "rgb("+colors[0][0]+","+colors[0][1]+","+colors[0][2]+")";
-    var two   = "rgb("+colors[1][0]+","+colors[1][1]+","+colors[1][2]+")";
-    var three = "rgb("+colors[2][0]+","+colors[2][1]+","+colors[2][2]+")";
-
-    $("#color1").css("background-color", one)
-    $("#color2").css("background-color", two)
-    $("#color3").css("background-color", three)
+    for (var i=0; i < colors.length; i++) {
+      var color = "rgb("+colors[i][0]+","+colors[i][1]+","+colors[i][2]+")";
+      var span = '<div class="color" style="background-color:'+color+'"></div>'
+      console.log(span)
+      $("#colors").append(span);
+    }
 }
 
 $(function() {
-    //var ctx = $('#picflag')[0].getContext("2d");
     $("#rain").load(kmeans);
 });
 </script>
 </head>
 <body>
     <img id="rain" src="rain.jpg">
-    <div id="color1" class="color"></div>
-    <div id="color2" class="color"></div>
-    <div id="color3" class="color"></div>
+    <div id="colors" style="height:150px"></div>
 </body>
 </html>
