@@ -13,17 +13,27 @@ Pixastic.Actions.kmeans = {
                      Math.pow(p1[2]-p2[2], 2));
   },
 
-  k_means : function(data, w, h) {
-    var centroids = [[Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
-                     [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
-                     [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)]];
+  //find <k> means in image data <data> with width <w> and height <h>. Assume a 3d space.
+  k_means : function(k, data, w, h) {
+    var centroids = [];
+    for (var i=0; i < k; i++) {
+      centroids.push([Math.round(Math.random()*255),
+                      Math.round(Math.random()*255),
+                      Math.round(Math.random()*255)]);
+    }
 
     while(1) {
       console.log("looping centroids ", JSON.stringify(centroids));
       var w4 = w*4;
       var y = h;
 
-      var classes = [[], [], []];
+      //create k classes in which to store the pixels which have been
+      //classified. A pixel in class i is closest to centroid i.
+      var classes = [];
+      for (var i=0; i < k; i++) {
+        classes.push([]);
+      }
+
       do {
         var offsetY = (y-1)*w4;
         var x = w;
@@ -39,7 +49,7 @@ Pixastic.Actions.kmeans = {
           var minc = null;
 
           //for each centroid, calculate the distance from the pixel
-          for (var i=0; i < 3; i++) {
+          for (var i=0; i < k; i++) {
             var centroid = centroids[i];
             var dist = this.euc_dist(pixel, centroid);
             if (dist < mindist) {
@@ -50,29 +60,30 @@ Pixastic.Actions.kmeans = {
 
           //store the pixel in the class of its closest centroid
           //classes[minc].push(pixel);
-          try {
-            classes[minc].push(pixel);
-          } catch(err) {
-            console.log(classes, minc, i, dist, pixel, centroid, offset);
-            throw err;
-          }
+          classes[minc].push(pixel);
         } while (--x);
       } while (--y);
 
       //if any of the classes are empty, try new centroids. We can't sensibly continue (?)
-      if (classes[0].length == 0 || classes[1].length == 0 || classes[2].length == 0) {
-        var centroids = [[Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
-                         [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)],
-                         [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)]];
-        continue;
+      for (var i=0; i < k; i++) {
+        if (classes[i].length == 0) {
+          centroids = [];
+          for (var j=0; j < k; j++) {
+            centroids.push([Math.round(Math.random()*255),
+                            Math.round(Math.random()*255),
+                            Math.round(Math.random()*255)]);
+          }
+          continue;
+        }
       }
 
-
-      //calculate the new centroids
+      //calculate the new centroids. For each class, sum up the r, g, and b values, then
+      //average them. The resulting center of mass is the new centroid.
       var new_centroids = [];
-      for (var klass=0; klass < 3; klass++) {
+      for (var klass=0; klass < k; klass++) {
         var sums = [0,0,0];
         var n = 0;
+
         for (var point=0; point < classes[klass].length; point++) {
           sums[0] += classes[klass][point][0];
           sums[1] += classes[klass][point][1];
@@ -101,7 +112,7 @@ Pixastic.Actions.kmeans = {
       var rect = params.options.rect;
       var w = rect.width;
       var h = rect.height;
-      params.options["centroids"] = this.k_means(data, w, h);
+      params.options["centroids"] = this.k_means(3, data, w, h);
       console.log("setting centroids ", params);
       return params["centroids"];
     }
