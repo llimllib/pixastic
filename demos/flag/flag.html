@@ -1,8 +1,5 @@
 <html><head><title>Pic Flag</title>
-<script src="jquery.min.js"></script>
-<script src="../../pixastic.core.js"></script>
-<script src="../../pixastic.jquery.js"></script>
-<script src="../../actions/kmeans.js"></script>
+<link rel="stylesheet" href="jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
 <style>
 .color {
     width: 150px;
@@ -10,6 +7,18 @@
     float:left;
 }
 </style>
+</head>
+<body>
+    <img id="rain" src="rain.jpg">
+    <div id="colors" style="height:150px"></div>
+    <div id="slider" style="margin-top: 20px;"></div>
+
+<script src="jquery.min.js"></script>
+<script src="jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="../../pixastic.core.js"></script>
+<script src="../../pixastic.jquery.js"></script>
+<script src="../../actions/kmeans.js"></script>
+<script src="../../actions/labcolor.js"></script>
 <script>
 
 function kmeans() {
@@ -26,13 +35,26 @@ function kmeans() {
     }
 }
 
+function lab() {
+    var params = {};
+    var ret = $("#rain").pixastic("lab", params);
+    var colors = params["lab_pixels"];
+    console.log("colors: ", colors, params, ret);
+}
+
 $(function() {
-    $("#rain").load(kmeans);
+  $("#rain").load(kmeans);
+  //$("#rain").load(lab);
+  $( "#slider" ).slider({
+    value: 3,
+    min: 1,
+    max: 15,
+    slide: function( event, ui ) {
+      console.log("slide");
+      //$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+    }
+  });
 });
 </script>
-</head>
-<body>
-    <img id="rain" src="rain.jpg">
-    <div id="colors" style="height:150px"></div>
 </body>
 </html>
