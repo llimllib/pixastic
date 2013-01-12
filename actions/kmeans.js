@@ -17,12 +17,16 @@ Pixastic.Actions.kmeans = {
   k_means : function(k, data, w, h) {
     var centroids = [];
     for (var i=0; i < k; i++) {
-      centroids.push([Math.round(Math.random()*255),
-                      Math.round(Math.random()*255),
-                      Math.round(Math.random()*255)]);
+      //choose a random pixel as a centroid
+      var pix = Math.round(Math.random()*w*h);
+      var offset = pix*4;
+      centroids.push([data[offset], data[offset+1], data[offset+2]]);
     }
 
-    while(1) {
+    var max_iter = 100;
+    var loop_iter = 0;
+    while(loop_iter < max_iter) {
+      loop_iter += 1;
       console.log("looping centroids ", JSON.stringify(centroids));
       var w4 = w*4;
       var y = h;
@@ -65,17 +69,21 @@ Pixastic.Actions.kmeans = {
       } while (--y);
 
       //if any of the classes are empty, try new centroids. We can't sensibly continue (?)
+      var new_centroids = false;
       for (var i=0; i < k; i++) {
         if (classes[i].length == 0) {
+          new_centroids = true;
           centroids = [];
-          for (var j=0; j < k; j++) {
-            centroids.push([Math.round(Math.random()*255),
-                            Math.round(Math.random()*255),
-                            Math.round(Math.random()*255)]);
+          for (var i=0; i < k; i++) {
+            //choose a random pixel as a centroid
+            var pix = Math.round(Math.random()*w*h);
+            var offset = pix*4
+            centroids.push([data[offset], data[offset+1], data[offset+2]]);
           }
-          continue;
         }
       }
+
+      if (new_centroids) continue;
 
       //calculate the new centroids. For each class, sum up the r, g, and b values, then
       //average them. The resulting center of mass is the new centroid.
@@ -113,7 +121,6 @@ Pixastic.Actions.kmeans = {
       var w = rect.width;
       var h = rect.height;
       params.options["centroids"] = this.k_means(3, data, w, h);
-      console.log("setting centroids ", params);
       return params["centroids"];
     }
   },
