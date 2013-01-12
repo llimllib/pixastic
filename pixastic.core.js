@@ -9,9 +9,9 @@ var Pixastic = (function() {
 
 	function addEvent(el, event, handler) {
 		if (el.addEventListener)
-			el.addEventListener(event, handler, false); 
+			el.addEventListener(event, handler, false);
 		else if (el.attachEvent)
-			el.attachEvent("on" + event, handler); 
+			el.attachEvent("on" + event, handler);
 	}
 
 	function onready(handler) {
@@ -31,7 +31,7 @@ var Pixastic = (function() {
 			}
 		}
 		if (document.addEventListener)
-			document.addEventListener("DOMContentLoaded", execHandler, false); 
+			document.addEventListener("DOMContentLoaded", execHandler, false);
 		addEvent(window, "load", execHandler);
 	}
 
@@ -60,14 +60,14 @@ var Pixastic = (function() {
 					if (dataImg.complete) {
 						for (var a=0;a<actions.length;a++) {
 							var res = Pixastic.applyAction(el, el, actions[a], null);
-							if (res) 
+							if (res)
 								el = res;
 						}
 					} else {
 						dataImg.onload = function() {
 							for (var a=0;a<actions.length;a++) {
 								var res = Pixastic.applyAction(el, el, actions[a], null)
-								if (res) 
+								if (res)
 									el = res;
 							}
 						}
@@ -78,7 +78,7 @@ var Pixastic = (function() {
 							var res = Pixastic.applyAction(
 								el, el, actions[a], null
 							);
-							if (res) 
+							if (res)
 								el = res;
 						}
 					},1);
@@ -118,7 +118,7 @@ var Pixastic = (function() {
 		if (!Pixastic.debug) return;
 		try {
 			switch (level) {
-				case "warn" : 
+				case "warn" :
 					console.warn("Pixastic:", text);
 					break;
 				case "error" :
@@ -130,7 +130,7 @@ var Pixastic = (function() {
 		} catch(e) {
 		}
 		if (!debugElement) {
-			
+
 		}
 	}
 
@@ -169,17 +169,17 @@ var Pixastic = (function() {
 			var redctx = red.getContext("2d");
 			redctx.fillStyle = "rgb(255,0,0)";
 			redctx.fillRect(0,0,1,1);
-	
+
 			var blue = document.createElement("canvas");
 			blue.width = blue.height = 1;
 			var bluectx = blue.getContext("2d");
 			bluectx.fillStyle = "rgb(0,0,255)";
 			bluectx.fillRect(0,0,1,1);
-	
+
 			redctx.globalAlpha = 0.5;
 			redctx.drawImage(blue, 0, 0);
 			var reddata = redctx.getImageData(0,0,1,1).data;
-	
+
 			hasAlpha = (reddata[2] != 255);
 		}
 		return function() {
@@ -195,7 +195,7 @@ var Pixastic = (function() {
 		parseOnLoad : false,
 
 		debug : false,
-		
+
 		applyAction : function(img, dataImg, actionName, options) {
 
 			options = options || {};
