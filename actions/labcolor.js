@@ -21,9 +21,9 @@ Pixastic.Actions.lab = {
     // I'm doing this part because it's what d3 does. I'm not exactly
     // clear on what it means, but I trust them. thank you guys.
     return [
-      (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.950470),
-      (0.2126729 * r + 0.7151522 * g + 0.0721750 * b)),
-      (0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / 1.088830);
+      (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.950470,
+      (0.2126729 * r + 0.7151522 * g + 0.0721750 * b),
+      (0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / 1.088830
     ];
   },
 
@@ -37,7 +37,7 @@ Pixastic.Actions.lab = {
   },
 
   rgb2lab : function(r, g, b) {
-    return xyz2lab(rgb2xyz(r, g, b));
+    return this.xyz2lab(this.rgb2xyz(r, g, b));
   },
 
   process : function(params) {
@@ -45,12 +45,13 @@ Pixastic.Actions.lab = {
 
     var newData = [];
 
+    var rect = params.options.rect;
     var p = rect.width * rect.height;
 
     while (p--) {
       //the index into the pixel array is p*4
       i = p*4;
-      lab = xyz2lab(data[i], data[i+1], data[i+2]);
+      lab = this.xyz2lab(data[i], data[i+1], data[i+2]);
 
       newData[i]   = lab[0];
       newData[i+1] = lab[1];
@@ -61,5 +62,9 @@ Pixastic.Actions.lab = {
     }
 
     params.options["lab_pixels"] = newData;
+  },
+
+  checkSupport : function() {
+    return Pixastic.Client.hasCanvasImageData();
   }
 }
