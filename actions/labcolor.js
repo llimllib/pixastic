@@ -40,6 +40,37 @@ Pixastic.Actions.lab = {
     return this.xyz2lab(this.rgb2xyz(r, g, b));
   },
 
+  lab2xyz : function(l, a, b) {
+    var y = (l + 16) / 116,
+        x = y + a / 500,
+        z = y - b / 200;
+    return [x, y, z];
+  },
+
+  xyz2rgb : function(x, y, z) {
+    // from xyz to sRGB? Maybe? The corrections at the end are to shift us out of
+    // D65. Maybe. Really just taking D3's word on it.
+    x = (x > 0.206893034 ? x * x * x : (x - 4 / 29) / 7.787037) * 0.950470;
+    y = y > 0.206893034 ? y * y * y : (y - 4 / 29) / 7.787037;
+    z = (z > 0.206893034 ? z * z * z : (z - 4 / 29) / 7.787037) * 1.088830;
+
+    //now from xyz to sRGB
+    var r = 3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
+        g = -0.9692660 * x + 1.8760108 * y + 0.0415560 * z,
+        b = 0.0556434 * x - 0.2040259 * y + 1.0572252 * z;
+
+    //then to RGB and return
+    return [
+      Math.round(255 * (r <= 0.00304 ? 12.92 * r : 1.055 * Math.pow(r, 1 / 2.4) - 0.055)),
+      Math.round(255 * (g <= 0.00304 ? 12.92 * g : 1.055 * Math.pow(g, 1 / 2.4) - 0.055)),
+      Math.round(255 * (b <= 0.00304 ? 12.92 * b : 1.055 * Math.pow(b, 1 / 2.4) - 0.055))
+    ];
+  },
+
+  lab2rgb : function(l, a, b) {
+    return this.xyz2rgb(this.lab2xyz(l, a, b));
+  },
+
   process : function(params) {
     var data = Pixastic.prepareData(params);
 
