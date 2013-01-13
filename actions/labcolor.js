@@ -5,9 +5,15 @@ Pixastic.Actions.lab = {
   // https://github.com/mbostock/d3/blob/master/src/core/rgb.js
   rgb2xyz : function(r, g, b) {
     //first to sRGB
-    r = (r / 255) <= 0.04045 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
-    g = (g / 255) <= 0.04045 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
-    b = (b / 255) <= 0.04045 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+    r = r/255;
+    g = g/255;
+    b = b/255;
+
+    r = r <= 0.04045 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+    g = g <= 0.04045 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+    b = b <= 0.04045 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+
+    console.log("sRGB: ", r, g, b);
 
     //now to XYZ
     // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
@@ -37,7 +43,8 @@ Pixastic.Actions.lab = {
   },
 
   rgb2lab : function(r, g, b) {
-    return this.xyz2lab(this.rgb2xyz(r, g, b));
+    var xyz = this.rgb2xyz(r, g, b);
+    return this.xyz2lab(xyz[0], xyz[1], xyz[2]);
   },
 
   lab2xyz : function(l, a, b) {
@@ -68,7 +75,8 @@ Pixastic.Actions.lab = {
   },
 
   lab2rgb : function(l, a, b) {
-    return this.xyz2rgb(this.lab2xyz(l, a, b));
+    var xyz = this.lab2xyz(l, a, b);
+    return this.xyz2rgb(xyz[0], xyz[1], xyz[2]);
   },
 
   process : function(params) {
